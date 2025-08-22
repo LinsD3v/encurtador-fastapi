@@ -27,6 +27,9 @@ async def encurtar_url(request: Request, url: str = Form(...)):
 async def get_url(key: str):
     url = data.get(key)
     if url:
+        # Adiciona http:// se não tiver
+        if not url.startswith(("http://", "https://")):
+            url = "http://" + url
         return RedirectResponse(url)
     else:
-        raise HTTPException(status_code=404, detail="Url não encontrada. ")
+        raise HTTPException(status_code=404, detail="Url não encontrada.")
